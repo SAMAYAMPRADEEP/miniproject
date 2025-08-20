@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Details</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome, <span id="userName"></span>!</h2>
+    <p>Email: <span id="userEmail"></span></p>
+    <p>Mobile: <span id="userMobile"></span></p>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (!user) {
+      window.location.href = 'index.html'; // Redirect if not logged in
+    } else {
+      document.getElementById('userName').textContent = user.name;
+     document.getElementById('userMobile').textContent = user.mobile;
+     document.getElementById('userEmail').textContent = user.email;
+    }
+
+    function logout() {
+      localStorage.removeItem('loggedInUser');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Logo Circle Above Form -->
+    <div class="logo">
+      <img src="logo.png" alt="Project Logo" />
+    </div>
+
+    <h2>Register</h2>
+    <form id="registerForm">
+      <input type="text" id="name" placeholder="Name" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <input type="text" id="mobile number" placeholder="Mobile Number" required />
+      <button type="submit">Register</button>
+     </form>
+    
+    <p><a href="index.html">Go to Login</a></p>
+    <p id="message" class="message"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+<script>
+  document.getElementById("registerForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim().toLowerCase();
+    const password = document.getElementById("password").value.trim();
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    const exists = users.find(user => user.email === email);
+
+    const messageElement = document.getElementById("message");
+
+    if (exists) {
+      messageElement.textContent = "Email already registered!";
+      messageElement.style.color = "red";
+    } else {
+      users.push({ name, email, password });
+      localStorage.setItem("users", JSON.stringify(users));
+      messageElement.textContent = "Registered successfully!";
+      messageElement.style.color = "green";
+      this.reset(); // Clear form
+    }
+  });
+</script>
+

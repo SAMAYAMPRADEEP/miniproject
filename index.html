@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="form-container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="email" id="loginEmail" placeholder="Email" required />
+      <input type="password" id="loginPassword" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <p><a href="register.html">Go to Register</a></p>
+    <p><a href="#" onclick="forgetPassword()">Forget Password?</a></p>
+    <p id="message"></p>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+<script>
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+    const password = document.getElementById("loginPassword").value.trim();
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const messageElement = document.getElementById("message");
+
+    const matchedUser = users.find(user => user.email === email && user.password === password);
+
+    if (matchedUser) {
+      localStorage.setItem("loggedInUser", JSON.stringify(matchedUser));
+      messageElement.textContent = "Login successful!";
+      messageElement.style.color = "green";
+      
+      setTimeout(() => {
+        window.location.href = "details.html"; // Redirect to detail page
+      }, 1000); // 1-second delay
+    } else {
+      messageElement.textContent = "Invalid email or password.";
+      messageElement.style.color = "red";
+    }
+  });
+</script>
